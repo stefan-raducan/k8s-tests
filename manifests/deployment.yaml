@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: random-consumer
+  namespace: random-api
+  labels:
+    app: random-consumer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: random-consumer
+  template:
+    metadata:
+      labels:
+        app: random-consumer
+    spec:
+      containers:
+        - name: consumer
+          image: nginx:alpine
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi

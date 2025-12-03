@@ -1,0 +1,17 @@
+# Development dependencies for k8s-tests
+
+# Pre-commit and hooks
+pre-commit==4.5.0
+detect-secrets==1.5.0
+
+# Python code formatting and linting
+black==24.10.0
+isort==5.13.2
+flake8==7.1.1
+
+# Testing (add as needed)
+# pytest==8.3.4
+# pytest-cov==6.0.0
+
+# Type checking (add as needed)
+mypy==1.13.0

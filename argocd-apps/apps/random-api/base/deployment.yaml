@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: random-api
+  namespace: random-api
+  labels:
+    app: random-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: random-api
+  template:
+    metadata:
+      labels:
+        app: random-api
+    spec:
+      containers:
+        - name: api
+          image: stefanraducan/random-api:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8000
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi

@@ -1,0 +1,18 @@
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: random-scaledobject
+  namespace: random-api
+spec:
+  scaleTargetRef:
+    name: random-consumer
+  minReplicaCount: 1
+  maxReplicaCount: 10
+  pollingInterval: 10 # Check every 10 seconds
+  cooldownPeriod: 30
+  triggers:
+    - type: metrics-api
+      metadata:
+        targetValue: "5" # Scale up if value > 5
+        url: "https://www.random.org/integers/?num=1&min=0&max=10&col=1&base=10&format=plain&rnd=new"
+        valueLocation: "value"

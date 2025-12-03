@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.env
+.direnv
+random-api/.direnv
+
+# Mac
+.DS_Store
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Terraform
+.terraform
+.terraform.tfstate.lock.info
+.terraform.lock.hcl
+terraform.tfstate
+terraform.tfstate.backup
+
+# Node.js / Prettier
+node_modules/

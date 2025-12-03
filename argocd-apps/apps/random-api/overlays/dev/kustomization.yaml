@@ -1,0 +1,37 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: random-api
+
+resources:
+  - ../../base
+  - namespace.yaml
+
+commonLabels:
+  environment: dev
+
+replicas:
+  - name: random-api
+    count: 1
+
+patches:
+  - target:
+      kind: Deployment
+      name: random-api
+    patch: |-
+      - op: replace
+        path: /spec/template/spec/containers/0/resources/requests/cpu
+        value: "50m"
+      - op: replace
+        path: /spec/template/spec/containers/0/resources/requests/memory
+        value: "64Mi"
+  - target:
+      kind: ScaledObject
+      name: random-scaledobject
+    patch: |-
+      - op: replace
+        path: /spec/maxReplicaCount
+        value: 5
+      - op: replace
+        path: /spec/pollingInterval
+        value: 15

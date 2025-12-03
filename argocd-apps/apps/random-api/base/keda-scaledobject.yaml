@@ -1,0 +1,20 @@
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: random-api-scaledobject
+  namespace: random-api
+spec:
+  scaleTargetRef:
+    name: random-api
+    kind: Deployment
+  minReplicaCount: 1
+  maxReplicaCount: 10
+  pollingInterval: 10 # Check every 10 seconds
+  cooldownPeriod: 30
+  triggers:
+    - type: metrics-api
+      metadata:
+        targetValue: "0" # Scale up if value > 0, scale down if value < 0
+        url: "http://random-api.random-api.svc.cluster.local:8000/random?min_nr=-5&max_nr=5"
+        valueLocation: "value"
+        activationTargetValue: "0" # Always active
