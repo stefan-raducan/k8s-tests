@@ -4,12 +4,6 @@ resource "kubernetes_namespace" "argocd" {
   }
 }
 
-resource "kubernetes_namespace" "random_api" {
-  metadata {
-    name = "random-api"
-  }
-}
-
 resource "helm_release" "argocd" {
   name       = "argo-cd"
   repository = "https://argoproj.github.io/argo-helm"
@@ -50,4 +44,10 @@ resource "helm_release" "argocd" {
   ]
 
   depends_on = [kubernetes_namespace.argocd]
+}
+
+resource "kubernetes_manifest" "app_of_apps" {
+  manifest = yamldecode(file("${path.module}/../argocd/argocd/app-of-apps-dev.yaml"))
+
+  depends_on = [helm_release.argocd]
 }

@@ -63,19 +63,19 @@ The base contains the common Kubernetes manifests that are shared across all env
 Deploy using the app-of-apps pattern:
 
 ```bash
-kubectl apply -f argocd-apps/argocd/app-of-apps.yaml
+```bash
+kubectl apply -f argocd/bootstrap/app-of-apps-dev.yaml
 ```
 
-This will automatically deploy both dev and prod environments.
+This will automatically deploy the dev environment. For prod:
+
+```bash
+kubectl apply -f argocd/bootstrap/app-of-apps-prod.yaml
+```
 
 ## Verification
 
-Build and view the manifests for each environment:
-
-```bash
-# Dev environment
-kubectl kustomize argocd-apps/apps/random-api/overlays/dev
-
-# Prod environment
-kubectl kustomize argocd-apps/apps/random-api/overlays/prod
-```
+Build and view the manifests for:
+- `argocd/apps/random-api/base`: Base configuration (Deployment, Service, KEDA ScaledObject)
+- `argocd/apps/random-api/overlays/dev`: Dev environment configuration
+- `argocd/apps/random-api/overlays/prod`: Prod environment configuration

@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: app-of-apps
+  name: random-api
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
@@ -10,13 +10,13 @@ spec:
   source:
     repoURL: https://github.com/stefan-raducan/k8s-tests.git
     targetRevision: HEAD
-    path: argocd-apps/argocd
+    path: argocd/apps/random-api/base
   destination:
     server: https://kubernetes.default.svc
-    namespace: argocd
+    namespace: random-api
   syncPolicy:
     automated:
-      prune: true # Automatically delete apps removed from Git
-      selfHeal: true # Automatically sync when Git changes
+      prune: true
+      selfHeal: true
     syncOptions:
       - CreateNamespace=true
