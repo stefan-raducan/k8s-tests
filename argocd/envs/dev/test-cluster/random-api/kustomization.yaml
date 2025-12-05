@@ -4,8 +4,7 @@ kind: Kustomization
 namespace: random-api
 
 resources:
-  - ../../base
-  - namespace.yaml
+  - ../../../../apps/random-api/overlays/minimal
 
 commonLabels:
   environment: dev
@@ -25,13 +24,9 @@ patches:
       - op: replace
         path: /spec/template/spec/containers/0/resources/requests/memory
         value: "64Mi"
-  - target:
-      kind: ScaledObject
-      name: random-scaledobject
-    patch: |-
       - op: replace
-        path: /spec/maxReplicaCount
-        value: 5
+        path: /spec/template/spec/containers/0/resources/limits/cpu
+        value: "100m"
       - op: replace
-        path: /spec/pollingInterval
-        value: 15
+        path: /spec/template/spec/containers/0/resources/limits/memory
+        value: "128Mi"

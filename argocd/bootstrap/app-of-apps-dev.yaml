@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: app-of-apps
+  name: app-of-apps-dev-test-cluster
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
@@ -16,7 +16,7 @@ spec:
     namespace: argocd
   syncPolicy:
     automated:
-      prune: true # Automatically delete apps removed from Git
-      selfHeal: true # Automatically sync when Git changes
+      prune: true
+      selfHeal: true
     syncOptions:
       - CreateNamespace=true
