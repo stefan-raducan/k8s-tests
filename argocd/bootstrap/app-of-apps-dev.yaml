@@ -10,7 +10,7 @@ spec:
   source:
     repoURL: https://github.com/stefan-raducan/k8s-tests.git
     targetRevision: develop
-    path: argocd/envs/dev
+    path: argocd/envs/dev/test-cluster
   destination:
     server: https://kubernetes.default.svc
     namespace: argocd
