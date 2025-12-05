@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: random-api-dev
+  name: random-api-prod
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
@@ -9,11 +9,11 @@ spec:
   project: default
   source:
     repoURL: https://github.com/stefan-raducan/k8s-tests.git
-    targetRevision: develop
-    path: argocd-apps/apps/random-api/overlays/dev
+    targetRevision: main
+    path: argocd/envs/prod/test-cluster/random-api
   destination:
     server: https://kubernetes.default.svc
-    namespace: random-api
+    namespace: random-api-prod
   syncPolicy:
     automated:
       prune: true
