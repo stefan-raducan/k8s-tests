@@ -79,3 +79,12 @@ Build and view the manifests for:
 - `argocd/apps/random-api/base`: Base configuration (Deployment, Service, KEDA ScaledObject)
 - `argocd/apps/random-api/overlays/dev`: Dev environment configuration
 - `argocd/apps/random-api/overlays/prod`: Prod environment configuration
+
+Test scaling metrics:
+```bash
+kubectl run curl-test --image=curlimages/curl:latest --rm -it --restart=Never -n nginx -- curl -s http://random-api.random-api.svc.cluster.local/random\?min_nr\=-5\&max_nr\=5
+```
+Watch scaling:
+```bash
+watch -n 1 'kubectl get pods -n nginx --no-headers | wc -l'
+```
