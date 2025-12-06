@@ -5,13 +5,3 @@ resources:
   - ../../base
 
 patches:
-  - target:
-      kind: ScaledObject
-      name: random-api-scaledobject
-    patch: |-
-      - op: replace
-        path: /spec/maxReplicaCount
-        value: 5
-      - op: replace
-        path: /spec/pollingInterval
-        value: 15
