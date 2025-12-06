@@ -14,6 +14,6 @@ spec:
     - type: metrics-api
       metadata:
         targetValue: "1" # Scale up if value > 1, scale down if value < 1
-        url: "http://random-api.random-api.svc.cluster.local:8000/random?min_nr=-5&max_nr=5"
+        url: "http://random-api.random-api.svc.cluster.local/random?min_nr=-5&max_nr=5"
         valueLocation: "value"
         activationTargetValue: "0" # Always active
