@@ -7,7 +7,7 @@ spec:
     name: nginx
     kind: Deployment
   minReplicaCount: 1
-  maxReplicaCount: 10
+  maxReplicaCount: 5
   pollingInterval: 30 # Check every 30 seconds (reduced frequency)
   cooldownPeriod: 120 # Wait 2 minutes before scaling down (increased stability)
   triggers:
