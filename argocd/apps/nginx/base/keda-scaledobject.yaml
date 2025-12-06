@@ -1,10 +1,10 @@
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
-  name: random-api-scaledobject
+  name: nginx-scaledobject
 spec:
   scaleTargetRef:
-    name: random-api
+    name: nginx
     kind: Deployment
   minReplicaCount: 1
   maxReplicaCount: 10
