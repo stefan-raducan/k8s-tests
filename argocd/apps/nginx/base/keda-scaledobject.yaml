@@ -8,12 +8,12 @@ spec:
     kind: Deployment
   minReplicaCount: 1
   maxReplicaCount: 10
-  pollingInterval: 10 # Check every 10 seconds
-  cooldownPeriod: 30
+  pollingInterval: 30 # Check every 30 seconds (reduced frequency)
+  cooldownPeriod: 120 # Wait 2 minutes before scaling down (increased stability)
   triggers:
     - type: metrics-api
       metadata:
-        targetValue: "1" # Scale up if value > 1, scale down if value < 1
+        targetValue: "4" # Scale up only if value > 4 (only value 5 triggers scale-up = ~17%)
         url: "http://random-api.random-api.svc.cluster.local/random?min_nr=-1&max_nr=5"
         valueLocation: "value"
         activationTargetValue: "0" # Always active
