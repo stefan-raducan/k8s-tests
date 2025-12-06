@@ -86,5 +86,5 @@ kubectl run curl-test --image=curlimages/curl:latest --rm -it --restart=Never -n
 ```
 Watch scaling:
 ```bash
-watch -n 1 'kubectl get pods -n nginx --no-headers | wc -l'
+k get events -n nginx --watch
 ```
