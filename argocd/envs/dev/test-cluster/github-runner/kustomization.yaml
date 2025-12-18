@@ -1,0 +1,13 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: github-runner
+
+resources:
+  - ../../../../apps/github-runner/overlays/minimal
+
+commonLabels:
+  environment: dev
+
+# Patches here would target the resources created by the minimal overlay (RunnerDeployment)
+# Removed incorrect nginx patches.

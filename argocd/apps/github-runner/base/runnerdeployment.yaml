@@ -1,0 +1,14 @@
+apiVersion: actions.summerwind.dev/v1alpha1
+kind: RunnerDeployment
+metadata:
+  name: runner-deployment
+spec:
+  template:
+    spec:
+      repository: stefan-raducan/k8s-tests
+      # needed to build images
+      dockerdWithinRunnerContainer: true
+      # This requires the runner container to be privileged if using dind inside.
+      # simplest config that ARC supports for DinD
+      # Ref: https://github.com/actions/actions-runner-controller/blob/master/docs/detailed-docs.md#docker-in-docker
+      image: summerwind/actions-runner-dind:latest
