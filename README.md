@@ -25,11 +25,12 @@ kubectl -n argocd patch secret argocd-initial-admin-secret --type merge -p '{"da
 Deploy all applications using the app-of-apps pattern:
 
 ```bash
-kubectl apply -f argocd-apps/argocd/app-of-apps.yaml
+```bash
+kubectl apply -f argocd/bootstrap/app-of-apps-dev.yaml
 ```
 
 This will automatically:
-- Monitor the `argocd-apps/argocd/` folder in Git
+- Monitor the `argocd/envs/dev` folder in Git
 - Deploy all applications defined there (currently: random-api)
 - Auto-sync when you push changes to Git
 - Auto-delete apps removed from Git

@@ -1,0 +1,19 @@
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: nginx-scaledobject
+spec:
+  scaleTargetRef:
+    name: nginx
+    kind: Deployment
+  minReplicaCount: 1
+  maxReplicaCount: 5
+  pollingInterval: 30 # Check every 30 seconds (reduced frequency)
+  cooldownPeriod: 120 # Wait 2 minutes before scaling down (increased stability)
+  triggers:
+    - type: metrics-api
+      metadata:
+        targetValue: "4" # Scale up only if value > 4 (only value 5 triggers scale-up = ~17%)
+        url: "http://random-api.random-api.svc.cluster.local/random?min_nr=4&max_nr=5"
+        valueLocation: "value"
+        activationTargetValue: "0" # Always active
