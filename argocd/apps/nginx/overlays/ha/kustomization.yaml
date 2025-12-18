@@ -1,0 +1,20 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - ../../base
+
+patches:
+  - target:
+      kind: ScaledObject
+      name: nginx-scaledobject
+    patch: |-
+      - op: replace
+        path: /spec/minReplicaCount
+        value: 2
+      - op: replace
+        path: /spec/maxReplicaCount
+        value: 10
+      - op: replace
+        path: /spec/pollingInterval
+        value: 5
