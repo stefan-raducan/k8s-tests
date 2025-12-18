@@ -6,6 +6,7 @@ spec:
   template:
     spec:
       repository: stefan-raducan/k8s-tests
+      labels: ["arc-runner"]
       # needed to build images
       dockerdWithinRunnerContainer: true
       # This requires the runner container to be privileged if using dind inside.

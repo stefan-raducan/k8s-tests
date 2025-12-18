@@ -6,7 +6,7 @@ on:
 
 jobs:
   backmerge:
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, arc-runner]
     permissions:
       contents: write
     steps:

@@ -52,4 +52,4 @@ resource "kubernetes_manifest" "app_of_apps" {
   depends_on = [helm_release.argocd]
 }
 
-# kubectl create secret generic github-runner-secret --from-literal=GITHUB_TOKEN=<RUNNER_TOKEN>
+# kubectl create secret generic github-runner-secret --from-literal=GITHUB_TOKEN=<RUNNER_TOKEN> --from-literal=github_token=<RUNNER_TOKEN> -n github-runner
