@@ -8,6 +8,16 @@ repos:
         exclude: package.lock.json
 
   # Python formatting and linting
+  - repo: local
+    hooks:
+      - id: unit-tests
+        name: run unit tests
+        entry: bash -c "cd random-api && pytest"
+        language: system
+        types: [python]
+        pass_filenames: false
+        files: ^random-api/
+
   - repo: https://github.com/psf/black
     rev: 24.10.0
     hooks:
