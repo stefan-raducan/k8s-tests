@@ -3,16 +3,3 @@ kind: Kustomization
 
 resources:
   - runnerdeployment.yaml
-
-helmCharts:
-  - name: actions-runner-controller
-    repo: https://actions-runner-controller.github.io/actions-runner-controller
-    version: 0.23.7 # Locking to a known compatible version or use latest
-    releaseName: actions-runner-controller
-    namespace: github-runner
-    valuesInline:
-      authSecret:
-        create: false
-        name: "github-runner-secret"
-      image:
-        actionsRunnerImage: summerwind/actions-runner:latest
