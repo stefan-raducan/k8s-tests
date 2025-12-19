@@ -5,26 +5,33 @@ metadata:
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1" # Install after cert-manager (-2)
 spec:
   project: default
   source:
     repoURL: https://open-telemetry.github.io/opentelemetry-helm-charts
     chart: opentelemetry-collector
-    targetRevision: 0.78.0 # Using a stable version of the chart
+    targetRevision: 0.142.0
     helm:
       releaseName: opentelemetry-collector
       values: |
         mode: daemonset
+
         image:
-          repository: otel/opentelemetry-collector-contrib
-          tag: 0.91.0
+          repository: otel/opentelemetry-collector-k8s
+
         presets:
+          # enables the k8sattributesprocessor and adds it to the traces, metrics, and logs pipelines
           kubernetesAttributes:
             enabled: true
+          # enables the kubeletstatsreceiver and adds it to the metrics pipelines
           kubeletMetrics:
             enabled: true
+          # Enables the filelogreceiver and adds it to the logs pipelines
           logsCollection:
             enabled: true
+
   destination:
     server: https://kubernetes.default.svc
     namespace: opentelemetry
@@ -34,3 +41,4 @@ spec:
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
+      - ServerSideApply=true
