@@ -44,7 +44,7 @@ spec:
           service:
             pipelines:
               traces:
-                exporters: [otlp]
+                exporters: [otlp, debug]
                 processors: [k8sattributes, memory_limiter, batch]
                 receivers: [otlp]
 
