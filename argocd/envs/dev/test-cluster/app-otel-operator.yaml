@@ -16,9 +16,22 @@ spec:
     helm:
       releaseName: opentelemetry-operator
       values: |
-        manager:
-          collectorImage:
-            repository: otel/opentelemetry-collector-contrib
+        mode: daemonset
+
+        image:
+          repository: otel/opentelemetry-collector-k8s
+
+        presets:
+          # enables the k8sattributesprocessor and adds it to the traces, metrics, and logs pipelines
+          kubernetesAttributes:
+            enabled: true
+          # enables the kubeletstatsreceiver and adds it to the metrics pipelines
+          kubeletMetrics:
+            enabled: true
+          # Enables the filelogreceiver and adds it to the logs pipelines
+          logsCollection:
+            enabled: true
+
   destination:
     server: https://kubernetes.default.svc
     namespace: opentelemetry-operator-system

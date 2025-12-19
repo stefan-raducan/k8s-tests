@@ -1,10 +1,11 @@
 name: build-test-push
 
 on:
-  workflow_run:
-    workflows: ["app-tests"]
-    types:
-      - completed
+  workflow_dispatch:
+  # workflow_run:
+  #   workflows: ["app-tests"]
+  #   types:
+  #     - completed
 
 jobs:
   build-test-push:
