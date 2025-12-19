@@ -13,6 +13,11 @@ replicas:
   - name: random-api
     count: 1
 
+images:
+  - name: stefanraducan/random-api
+    newName: stefanraducan/random-api
+    digest: sha256:12aeb663f61305543ae4234e33a19343c2825962b5c7cfb278d5e687ee61b37c
+
 patches:
   - target:
       kind: Deployment
