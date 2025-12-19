@@ -39,10 +39,13 @@ jobs:
 
       - name: Install dependencies
         run: |
-          export OTEL_EXPORTER_OTLP_ENDPOINT=jaeger-collector.jaeger.svc.cluster.local:4317
+          export OTEL_EXPORTER_OTLP_ENDPOINT=opentelemetry-collector.opentelemetry.svc.cluster.local:4317
+          export OTEL_EXPORTER_OTLP_INSECURE=true
           otel-cli exec --service app-tests --name "install pip dependencies" -- pip install -r requirements.txt
           otel-cli exec --service app-tests --name "install pip extra dependencies" -- pip install httpx pytest
 
       - name: Run tests
         run: |
+          export OTEL_EXPORTER_OTLP_ENDPOINT=opentelemetry-collector.opentelemetry.svc.cluster.local:4317
+          export OTEL_EXPORTER_OTLP_INSECURE=true
           otel-cli exec --service app-tests --name "run tests" -- pytest tests/
