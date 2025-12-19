@@ -19,7 +19,7 @@ spec:
         mode: daemonset
 
         image:
-          repository: ghcr.io/open-telemetry/opentelemetry-collector-k8s
+          repository: ghcr.io/open-telemetry/opentelemetry-collector-releases/opentelemetry-collector-k8s:sha256-0e2fc739e240e8d89191f735f5f9f2a351f381230a1703e92c71235170a96900.sig
 
         presets:
           # enables the k8sattributesprocessor and adds it to the traces, metrics, and logs pipelines
