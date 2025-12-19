@@ -12,4 +12,13 @@ spec:
       # This requires the runner container to be privileged if using dind inside.
       # simplest config that ARC supports for DinD
       # Ref: https://github.com/actions/actions-runner-controller/blob/master/docs/detailed-docs.md#docker-in-docker
-      image: summerwind/actions-runner-dind:latest
+      containers:
+        - name: runner
+          image: summerwind/actions-runner-dind:latest
+          env:
+            - name: DOCKERD_IN_RUNNER
+              value: "true"
+            - name: OTEL_EXPORTER_OTLP_ENDPOINT
+              value: http://opentelemetry-collector.opentelemetry.svc.cluster.local:4317
+            - name: OTEL_RESOURCE_ATTRIBUTES
+              value: service.name=gh-runner
