@@ -1,0 +1,38 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: jaeger
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: https://jaegertracing.github.io/helm-charts
+    chart: jaeger
+    targetRevision: 4.1.4
+    helm:
+      releaseName: jaeger
+      values: |
+        allInOne:
+          enabled: true
+          image:
+            tag: "2.13.0"
+        storage:
+          type: none # In-memory storage for all-in-one
+        agent:
+          enabled: false # We use OTel Collector directly via OTLP
+        collector:
+          enabled: true
+          service:
+            otlp:
+              enabled: true
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: jaeger
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
