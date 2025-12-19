@@ -10,7 +10,7 @@ on:
 jobs:
   build-test-push:
     runs-on: [self-hosted, arc-runner]
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    # if: ${{ github.event.workflow_run.conclusion == 'success' }}
     permissions:
       contents: read
       packages: write
