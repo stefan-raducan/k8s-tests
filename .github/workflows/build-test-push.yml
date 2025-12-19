@@ -47,16 +47,12 @@ jobs:
 
       - name: Build and load image
         id: build
-        uses: krzko/run-with-telemetry@v0.6.0
+        uses: docker/build-push-action@v5
         with:
-          run: |
-            docker buildx build \
-              --context ./random-api \
-              --tag ${{ secrets.DOCKERHUB_USERNAME }}/random-api:latest \
-              --tag ${{ secrets.DOCKERHUB_USERNAME }}/random-api:sha-${{ github.event.workflow_run.head_sha }} \
-              --load \
-              --label "${{ steps.meta.outputs.labels }}" \
-              .
+          context: ./random-api
+          load: true # Load into local Docker daemon for scanning
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
 
       - name: Generate SBOM
         uses: anchore/sbom-action@v0
@@ -73,9 +69,8 @@ jobs:
           output-format: table
 
       - name: Push image
-        uses: krzko/run-with-telemetry@v0.6.0
-        with:
-          run: docker push --all-tags ${{ secrets.DOCKERHUB_USERNAME }}/random-api
+        run: |
+          docker push --all-tags ${{ secrets.DOCKERHUB_USERNAME }}/random-api
 
       - name: Sign and Attest SBOM
         run: |
