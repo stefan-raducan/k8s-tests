@@ -30,3 +30,10 @@ patches:
       - op: replace
         path: /spec/template/spec/containers/0/resources/limits/memory
         value: "128Mi"
+      - op: add
+        path: /spec/template/spec/containers/0/env
+        value:
+          - name: OTEL_EXPORTER_OTLP_ENDPOINT
+            value: http://opentelemetry-collector.opentelemetry.svc.cluster.local:4317
+          - name: OTEL_SERVICE_NAME
+            value: random-api
