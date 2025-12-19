@@ -70,11 +70,15 @@ jobs:
 
       - name: Push image
         run: |
-          docker push --all-tags ${{ secrets.DOCKERHUB_USERNAME }}/random-api
+          export OTEL_EXPORTER_OTLP_ENDPOINT=opentelemetry-collector.opentelemetry.svc.cluster.local:4317
+          export OTEL_EXPORTER_OTLP_INSECURE=true
+          otel-cli exec --service build-test-push --name "push image" -- docker push --all-tags ${{ secrets.DOCKERHUB_USERNAME }}/random-api
 
       - name: Sign and Attest SBOM
         run: |
-          cosign attest -y \
+          export OTEL_EXPORTER_OTLP_ENDPOINT=opentelemetry-collector.opentelemetry.svc.cluster.local:4317
+          export OTEL_EXPORTER_OTLP_INSECURE=true
+          otel-cli exec --service build-test-push --name "sign and attest sbom" -- cosign attest -y \
             --predicate sbom.spdx.json \
             --type spdx \
             ${{ secrets.DOCKERHUB_USERNAME }}/random-api@${{ steps.build.outputs.digest }}
