@@ -2,6 +2,33 @@ resource "kubernetes_namespace" "argocd" {
   metadata {
     name = "argocd"
   }
+  lifecycle {
+    ignore_changes = [
+      metadata[0].labels,
+    ]
+  }
+}
+
+resource "kubernetes_namespace" "cloudflared" {
+  metadata {
+    name = "cloudflared"
+  }
+  lifecycle {
+    ignore_changes = [
+      metadata[0].labels,
+    ]
+  }
+}
+
+resource "kubernetes_namespace" "github-runner" {
+  metadata {
+    name = "github-runner"
+  }
+  lifecycle {
+    ignore_changes = [
+      metadata[0].labels,
+    ]
+  }
 }
 
 resource "helm_release" "argocd" {
@@ -46,12 +73,14 @@ resource "helm_release" "argocd" {
   depends_on = [kubernetes_namespace.argocd]
 }
 
-resource "kubernetes_manifest" "app_of_apps" {
-  manifest = yamldecode(file("${path.module}/../argocd/bootstrap/dev-test-cluster.yaml"))
-
-  depends_on = [helm_release.argocd]
-}
-
 # kubectl create secret generic github-runner-secret \
-#   --from-literal=github_token=<RUNNER_SPECIFIC_PAT> \
+#   --from-literal=github_token=ARC_RUNNER_SPECIFIC_PAT \
 #   -n github-runner --dry-run=client -o yaml | kubectl apply -f -
+
+# https://one.dash.cloudflare.com/f431007b7221f1fbf07048122d56c7c2/networks/connectors/cloudflare-tunnels/cfd_tunnel/70fff944-db91-450f-a6d2-f545b9173b89/edit?tab=overview
+# kubectl create secret generic tunnel-credentials \
+#   --from-literal=token='TOKEN' \
+#   -n cloudflared
+
+# at the end of the terraform apply and secret creation run the following to enable argocd management:
+# kubectl apply -f argocd/bootstrap/dev-test-cluster.yaml

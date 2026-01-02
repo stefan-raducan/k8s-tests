@@ -86,3 +86,9 @@ kubectl get applications -n argocd
 ```
 
 Or view in the ArgoCD UI.
+
+### Port Forward
+If you don't want to use cloudflared to access argocd, you can use port forward:
+```bash
+kubectl port-forward svc/argo-cd-argocd-server -n argocd 8080:443
+```
